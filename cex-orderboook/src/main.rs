@@ -1,4 +1,4 @@
-use std::sync::{Arc, Mutex};
+ use std::sync::{Arc, Mutex};
 
 use actix_web::{web::Data, App, HttpServer};
 
@@ -10,10 +10,10 @@ pub mod orderbook;
 
 #[actix_web::main]
 async fn main() -> Result<(), std::io::Error> {
-    let orderbook =Arc::new(Mutex::new(Orderbook::new()));
+    let orderbook = Arc::new(Mutex::new(Orderbook::new()));
     HttpServer::new(move || {
         App::new()
-        .app_data(Data::from(orderbook.clone()))
+        .app_data(Data::new(orderbook.clone()))
         .service(create_order)
         .service(cancel_order)
         .service(get_depth)
